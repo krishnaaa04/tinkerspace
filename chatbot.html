@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot - Couple Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        deepPurple: '#6b21a8',
+                        softPink: '#f9a8d4',
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-romanticPurple via-softPink to-deepPurple">
+    <div class="bg-white shadow-xl rounded-2xl p-8 sm:p-12 w-full max-w-2xl">
+        <h1 class="text-3xl font-bold text-center text-deepPurple mb-4">Chat with Cupid</h1>
+        <p class="text-gray-600 text-center mb-8">Start your conversation and connect with your partner 💕</p>
+        
+        <!-- Chat Window -->
+        <div id="chatbox" class="h-96 overflow-y-auto p-4 border border-gray-300 rounded-xl bg-gray-50 mb-4">
+            <!-- Chat messages will appear here -->
+        </div>
+        
+        <!-- Input Field -->
+        <div class="flex items-center">
+            <input id="userInput" type="text" placeholder="Type your question..." 
+                   class="flex-1 border border-gray-300 p-3 rounded-lg focus:ring-romanticPurple focus:border-romanticPurple"
+                   onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" 
+                    class="ml-2 bg-deepPurple text-white px-6 py-3 rounded-lg hover:bg-romanticPurple focus:ring-4 focus:ring-softPink transition duration-300">
+                Send
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const responses = {
+            "hello": "Hi there! How can I help you and your partner today?",
+            "hi": "Hi there! How can I help you and your partner today?",
+            "feeling down": "I'm sorry to hear that. It's okay to feel down sometimes. Try sharing your feelings with your partner—they care about you! ❤️",
+            "feeling sad": "It's tough to feel this way. Consider talking to your partner about what's on your mind. Communication can help lighten the burden.",
+            "feeling angry at my partner": "Anger is natural, but try to focus on the issue, not the person. Take a moment to breathe and express your feelings calmly.",
+            "how to communicate better": "Great question! Active listening and expressing feelings without blame are key. Have regular check-ins with your partner!",
+            "date night ideas": "How about a virtual movie night, cooking a meal together over video, or playing an online game together?",
+            "long-distance relationship tips": "Stay consistent with communication, send surprise gifts or letters, and schedule virtual dates regularly.",
+            "how to handle arguments": "Take a break to cool down, focus on the issue and not the person, and use 'I' statements to express your feelings.",
+            "what are some romantic gestures": "Write love notes, plan a surprise date, send a thoughtful gift, or create a playlist of songs you both love.",
+            "how to build trust": "Be honest and consistent, keep promises, and show your partner that they can rely on you emotionally and practically.",
+            "bye": "Goodbye! Wishing you and your partner lots of love and happiness! ❤️"
+        };
+
+        function findBestMatch(input) {
+            const keys = Object.keys(responses);
+            for (let key of keys) {
+                if (input.includes(key)) {
+                    return responses[key];
+                }
+            }
+            return null;
+        }
+
+        function sendMessage() {
+            const chatbox = document.getElementById("chatbox");
+            const userInput = document.getElementById("userInput");
+            const userMessage = userInput.value.trim().toLowerCase();
+
+            if (userMessage === "") return;
+
+            chatbox.innerHTML += `<div class='text-sm text-right text-blue-600'>You: ${userInput.value}</div>`;
+            const botResponse = findBestMatch(userMessage) || 
+                "I'm not sure how to respond to that. Could you rephrase or ask something else?";
+            chatbox.innerHTML += `<div class='text-sm text-gray-700'>Bot: ${botResponse}</div>`;
+            chatbox.scrollTop = chatbox.scrollHeight;
+            userInput.value = "";
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>

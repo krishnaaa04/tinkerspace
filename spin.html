@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Night Spinner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        softPink: '#f9a8d4',
+                        calmingBlue: '#60a5fa',
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .spinner-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ffadad 0% 10%, #ffd6a5 10% 20%, #fdffb6 20% 30%, 
+                #caffbf 30% 40%, #9bf6ff 40% 50%, #a0c4ff 50% 60%, 
+                #bdb2ff 60% 70%, #ffc6ff 70% 80%, #ff9aa2 80% 90%, #fbc4ab 90% 100%
+            );
+            border: 8px solid #6b21a8;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 4s ease-out;
+        }
+        .spinner-container div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: normal;
+            text-align: center;
+            color: black;
+            transform-origin: 50% 150%;
+            padding: 10px;
+        }
+        .spinner-container div:nth-child(1) { transform: rotate(18deg) translateY(-40%) rotate(-18deg); }
+        .spinner-container div:nth-child(2) { transform: rotate(54deg) translateY(-40%) rotate(-54deg); }
+        .spinner-container div:nth-child(3) { transform: rotate(90deg) translateY(-40%) rotate(-90deg); }
+        .spinner-container div:nth-child(4) { transform: rotate(126deg) translateY(-40%) rotate(-126deg); }
+        .spinner-container div:nth-child(5) { transform: rotate(162deg) translateY(-40%) rotate(-162deg); }
+        .spinner-container div:nth-child(6) { transform: rotate(198deg) translateY(-40%) rotate(-198deg); }
+        .spinner-container div:nth-child(7) { transform: rotate(234deg) translateY(-40%) rotate(-234deg); }
+        .spinner-container div:nth-child(8) { transform: rotate(270deg) translateY(-40%) rotate(-270deg); }
+        .spinner-container div:nth-child(9) { transform: rotate(306deg) translateY(-40%) rotate(-306deg); }
+        .spinner-container div:nth-child(10) { transform: rotate(342deg) translateY(-40%) rotate(-342deg); }
+        .arrow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid #6b21a8;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-romanticPurple via-softPink to-calmingBlue min-h-screen flex flex-col justify-between m-0">
+    <header class="bg-white py-4 shadow-lg w-full text-center">
+        <h1 class="text-4xl font-bold text-purple-700">🎡 Date Night Spinner</h1>
+        <p class="text-gray-600">Spin to discover your next date night adventure!</p>
+    </header>
+
+    <div class="flex flex-col items-center flex-grow justify-center py-8">
+        <div class="spinner-container" id="spinner">
+            <div>Movie Night 🍿</div>
+            <div>Beach Walk 🏖️</div>
+            <div>Game Night 🎮</div>
+            <div>Star Gazing 🌌</div>
+            <div>Cooking 🍳</div>
+            <div>Bowling 🎳</div>
+            <div>Picnic in Park 🌳</div>
+            <div>Live Music 🎵</div>
+            <div>Cafe Hopping ☕</div>
+            <div>Wine Tasting 🍷</div>
+        </div>
+
+        <button id="spinButton" class="bg-purple-600 text-white py-2 px-6 rounded-lg mt-6 hover:bg-purple-700">
+            Spin
+        </button>
+        <div id="selectedDate" class="text-purple-700 font-bold text-xl mt-6"></div>
+    </div>
+
+    <!-- <footer class="bg-white py-4 mt-8 w-full text-center shadow-lg"></footer> -->
+
+    <script>
+        const spinButton = document.getElementById('spinButton');
+        const spinner = document.getElementById('spinner');
+        const selectedDate = document.getElementById('selectedDate');
+        const dateIdeas = [
+            "Movie Night 🍿",
+            "Beach Walk 🏖️",
+            "Game Night 🎮",
+            "Star Gazing 🌌",
+            "Cooking 🍳",
+            "Bowling 🎳",
+            "Picnic in Park 🌳",
+            "Live Music 🎵",
+            "Cafe Hopping ☕",
+            "Wine Tasting 🍷"
+        ];
+
+        spinButton.addEventListener('click', () => {
+            const randomDegree = Math.floor(Math.random() * 360) + 3600; // Random spin + extra rotations
+            spinner.style.transform = `rotate(${randomDegree}deg)`;
+
+            const selectedIdea = dateIdeas[(10 - Math.floor(randomDegree % 360 / 36)) % 10];
+            setTimeout(() => {
+                selectedDate.innerText = `Selected Date Idea: ${selectedIdea}`;
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

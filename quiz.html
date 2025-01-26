@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        softPink: '#f9a8d4',
+                        calmingBlue: '#60a5fa',
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gradient-to-r from-romanticPurple via-softPink to-calmingBlue min-h-screen flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-2/3 p-8">
+        <h1 class="text-3xl font-bold text-purple-600 text-center">💌 Love Quiz</h1>
+        <p class="text-gray-600 text-center mt-2">Test how well you know each other!</p>
+
+        <form id="quiz-form" class="mt-6 space-y-6">
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-6">
+                <div id="progress-bar" class="bg-purple-600 h-2.5 rounded-full w-0"></div>
+            </div>
+
+            <!-- Questions Section (will be dynamically injected) -->
+            <div id="questions-container"></div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition">Submit Answers</button>
+        </form>
+
+        <div id="result" class="mt-6 text-center hidden">
+            <h2 class="text-2xl font-bold text-purple-600">Results</h2>
+            <p class="text-gray-600 mt-2">Your score: <span id="score"></span>/10</p>
+            <p id="feedback" class="text-gray-700 mt-2"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('quiz-form');
+        const resultDiv = document.getElementById('result');
+        const scoreSpan = document.getElementById('score');
+        const feedbackText = document.getElementById('feedback');
+        const progressBar = document.getElementById('progress-bar');
+        const questionsContainer = document.getElementById('questions-container');
+
+        // Quiz data
+        const questions = [
+            { q: "What’s your partner’s favorite color?", options: ['Red', 'Blue', 'Green', 'Yellow'], correct: 'Blue' },
+            { q: "What’s your partner’s favorite cuisine?", options: ['Italian', 'Chinese', 'Indian', 'Mexican'], correct: 'Italian' },
+            { q: "Where did you go on your first date?", options: ['Park', 'Restaurant', 'Movie', 'Beach'], correct: 'Restaurant' },
+            { q: "What’s your partner’s dream vacation spot?", options: ['Paris', 'Maldives', 'New York', 'Japan'], correct: 'Maldives' },
+            { q: "What’s your partner’s favorite hobby?", options: ['Reading', 'Cooking', 'Gaming', 'Traveling'], correct: 'Reading' },
+            { q: "What’s your partner’s favorite movie genre?", options: ['Comedy', 'Romantic', 'Action', 'Horror'], correct: 'Romantic' },
+            { q: "How does your partner like their coffee?", options: ['Black', 'With Milk', 'Iced', 'No Coffee'], correct: 'Black' },
+            { q: "What’s your partner’s favorite season?", options: ['Winter', 'Summer', 'Spring', 'Fall'], correct: 'Spring' },
+            { q: "What’s your partner’s favorite type of pet?", options: ['Dog', 'Cat', 'Bird', 'Fish'], correct: 'Dog' },
+            { q: "What’s your partner’s go-to comfort food?", options: ['Pizza', 'Ice Cream', 'Burger', 'Chocolate'], correct: 'Pizza' }
+        ];
+
+        // Shuffle questions to randomize order
+        function shuffleArray(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        const shuffledQuestions = shuffleArray([...questions]);
+
+        // Dynamically generate questions
+        shuffledQuestions.forEach((question, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.innerHTML = `
+                <p class="font-bold text-purple-700">${index + 1}. ${question.q}</p>
+                <div>
+                    ${question.options.map(option => `
+                        <label><input type="radio" name="q${index + 1}" value="${option}" class="mr-2"> ${option}</label><br>
+                    `).join('')}
+                </div>
+            `;
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Track progress
+        form.addEventListener('change', function() {
+            const totalQuestions = shuffledQuestions.length;
+            const answeredQuestions = [...form.elements].filter(input => input.checked).length;
+            const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        });
+
+        // Handle form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const correctAnswers = shuffledQuestions.reduce((acc, question, index) => {
+                const userAnswer = form[`q${index + 1}`]?.value;
+                if (userAnswer === question.correct) {
+                    acc++;
+                }
+                return acc;
+            }, 0);
+
+            // Display results
+            scoreSpan.textContent = correctAnswers;
+            resultDiv.classList.remove('hidden');
+
+            if (correctAnswers === 10) {
+                feedbackText.textContent = "Amazing! You know each other perfectly!";
+            } else if (correctAnswers >= 7) {
+                feedbackText.textContent = "Great job! You know each other well.";
+            } else {
+                feedbackText.textContent = "Nice try! Maybe it's time for a few more date nights to learn even more about each other!";
+            }
+        });
+    </script>
+</body>
+</html>

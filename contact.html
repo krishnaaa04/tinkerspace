@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Cupid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        deepPurple: '#6b21a8',
+                        softPink: '#f9a8d4',
+                        calmingBlue: '#60a5fa',
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gradient-to-r from-romanticPurple via-softPink to-calmingBlue min-h-screen">
+    <header class="bg-white shadow-lg py-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold text-purple-600">📬 Contact Cupid</h1>
+            <p class="text-gray-600">We'd love to hear from you!</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto mt-8 px-4">
+        <!-- Contact Form Section -->
+        <section class="mb-8">
+            <h2 class="text-3xl font-semibold text-purple-800">Get in Touch</h2>
+            <p class="text-lg text-gray-700 mt-4">
+                If you have any questions, feedback, or suggestions, please fill out the form below. We’ll get back to you as soon as possible!
+            </p>
+
+            <form action="#" method="POST" class="mt-6 space-y-6">
+                <div class="flex flex-col">
+                    <label for="name" class="text-lg font-semibold text-purple-800">Name</label>
+                    <input type="text" id="name" name="name" class="p-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Your Name" required>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="email" class="text-lg font-semibold text-purple-800">Email</label>
+                    <input type="email" id="email" name="email" class="p-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Your Email" required>
+                </div>
+
+                <div class="flex flex-col">
+                    <label for="message" class="text-lg font-semibold text-purple-800">Message</label>
+                    <textarea id="message" name="message" class="p-3 border-2 border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" rows="6" placeholder="Your Message" required></textarea>
+                </div>
+
+                <div class="flex justify-center mt-4">
+                    <button type="submit" class="bg-purple-600 text-white font-bold py-2 px-6 rounded-full hover:bg-purple-700 transition-all">
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Location and Social Media Section -->
+        <section class="mb-8">
+            <h2 class="text-3xl font-semibold text-purple-800">Connect with Us</h2>
+            <p class="text-lg text-gray-700 mt-4">
+                You can also connect with us on social media or find our office details below:
+            </p>
+
+            <!-- Social Media Links -->
+            <div class="flex justify-center space-x-6 mt-6">
+                <a href="https://twitter.com" class="text-purple-600 hover:text-purple-800 text-2xl" target="_blank">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="https://facebook.com" class="text-purple-600 hover:text-purple-800 text-2xl" target="_blank">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="https://instagram.com" class="text-purple-600 hover:text-purple-800 text-2xl" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+
+            <!-- Office Location (Optional) -->
+            <div class="mt-8 text-center">
+                <p class="text-lg text-gray-700">Our office is located at:</p>
+                <p class="text-lg font-semibold text-purple-800">Cupid Technologies</p>
+                <p class="text-gray-700">123 Love Lane, Heart City, 4567</p>
+            </div>
+        </section>
+
+        <!-- Back to Home Button -->
+        <section class="text-center mt-8">
+            <a href="index.html" class="bg-purple-600 text-white py-2 px-4 rounded-full hover:bg-purple-700 transition-all">Back to Home</a>
+        </section>
+    </div>
+
+    <footer class="mt-8 bg-purple-600 py-4 text-center text-white">
+        <p>&copy; 2025 Cupid. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
