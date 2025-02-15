@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect with Partner - Cupid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        deepPurple: '#6b21a8',
+                        softPink: '#f9a8d4',
+                        calmingBlue: '#60a5fa',
+                    },
+                },
+            },
+        };
+
+        function generatePartnerCode() {
+            const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = 'CUPID';
+            for (let i = 0; i < 6; i++) {
+                code += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            document.getElementById('partner-code').value = code;
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-r from-romanticPurple via-softPink to-calmingBlue min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md mx-auto bg-white shadow-xl rounded-2xl p-6 text-center">
+        <h2 class="text-3xl font-bold text-deepPurple mb-6">🔗 Connect with Your Partner</h2>
+
+        <!-- Connection Form -->
+        <form action="/connect-partner" method="POST" class="space-y-4">
+            <div>
+                <label for="partner-code" class="block text-sm font-medium text-gray-700">Enter Your Partner's Code</label>
+                <input
+                    type="text"
+                    id="partner-code"
+                    name="partner-code"
+                    placeholder="e.g., CUPID123"
+                    class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-romanticPurple focus:border-romanticPurple"
+                    required
+                />
+                <button type="button" onclick="generatePartnerCode()" class="mt-2 bg-romanticPurple text-white px-3 py-1 rounded-full hover:bg-deepPurple transition">Generate Code</button>
+            </div>
+            <div>
+                <button
+                    type="submit"
+                    class="w-full bg-deepPurple text-white py-2 px-4 rounded-lg shadow hover:bg-romanticPurple focus:outline-none focus:ring-2 focus:ring-romanticPurple"
+                >
+                    Send Connection Request
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">
+                Waiting for your partner to accept? <a href="/status" class="text-romanticPurple hover:underline">Check Status</a>
+            </p>
+        </div>
+
+        <div class="mt-6 bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-medium text-gray-700 mb-2">How It Works</h3>
+            <ul class="list-disc list-inside text-sm text-gray-600">
+                <li>Click 'Generate Code' to create a unique partner code.</li>
+                <li>Share your unique code with your partner.</li>
+                <li>Your partner enters the code on their dashboard.</li>
+                <li>Once they accept, you're officially connected!</li>
+            </ul>
+        </div>
+
+        <div class="mt-6 text-center space-x-4">
+            <a href="/dashboard" class="bg-calmingBlue text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition">🏠 Back to Dashboard</a>
+            <a href="home.html" class="bg-softPink text-white py-2 px-4 rounded-lg shadow-md hover:bg-pink-600 transition">💖 Home</a>
+        </div>
+    </div>
+</body>
+</html>

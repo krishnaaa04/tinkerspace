@@ -25,9 +25,7 @@
         <p class="text-gray-600 text-center mb-8">Start your conversation and connect with your partner 💕</p>
         
         <!-- Chat Window -->
-        <div id="chatbox" class="h-96 overflow-y-auto p-4 border border-gray-300 rounded-xl bg-gray-50 mb-4">
-            <!-- Chat messages will appear here -->
-        </div>
+        <div id="chatbox" class="h-96 overflow-y-auto p-4 border border-gray-300 rounded-xl bg-gray-50 mb-4"></div>
         
         <!-- Input Field -->
         <div class="flex items-center">
@@ -42,43 +40,59 @@
     </div>
 
     <script>
-        const responses = {
-            "hello": "Hi there! How can I help you and your partner today?",
-            "hi": "Hi there! How can I help you and your partner today?",
-            "feeling down": "I'm sorry to hear that. It's okay to feel down sometimes. Try sharing your feelings with your partner—they care about you! ❤️",
-            "feeling sad": "It's tough to feel this way. Consider talking to your partner about what's on your mind. Communication can help lighten the burden.",
-            "feeling angry at my partner": "Anger is natural, but try to focus on the issue, not the person. Take a moment to breathe and express your feelings calmly.",
-            "how to communicate better": "Great question! Active listening and expressing feelings without blame are key. Have regular check-ins with your partner!",
-            "date night ideas": "How about a virtual movie night, cooking a meal together over video, or playing an online game together?",
-            "long-distance relationship tips": "Stay consistent with communication, send surprise gifts or letters, and schedule virtual dates regularly.",
-            "how to handle arguments": "Take a break to cool down, focus on the issue and not the person, and use 'I' statements to express your feelings.",
-            "what are some romantic gestures": "Write love notes, plan a surprise date, send a thoughtful gift, or create a playlist of songs you both love.",
-            "how to build trust": "Be honest and consistent, keep promises, and show your partner that they can rely on you emotionally and practically.",
-            "bye": "Goodbye! Wishing you and your partner lots of love and happiness! ❤️"
-        };
+        const responses = [
+            { keywords: ["hello", "hi"], response: "Hi there! How can I help you and your partner today?" },
+            { keywords: ["sad", "down", "depressed"], response: "I'm sorry to hear that. Try sharing your feelings with your partner—they care about you! ❤" },
+            { keywords: ["angry", "mad", "frustrated"], response: "Anger is natural, but try to focus on the issue, not the person. Take a moment to breathe and express your feelings calmly." },
+            { keywords: ["communicate", "better talk", "understand each other"], response: "Great question! Active listening and expressing feelings without blame are key. Have regular check-ins with your partner!" },
+            { keywords: ["date night", "romantic ideas", "fun together"], response: "How about a virtual movie night, cooking a meal together, or playing an online game?" },
+            { keywords: ["trust", "faith", "honest"], response: "Trust grows through honesty, consistency, and keeping promises. Show your partner they can rely on you emotionally and practically." },
+            { keywords: ["long-distance", "far away", "LDR"], response: "Stay consistent with communication, send surprise gifts or letters, and schedule virtual dates regularly." },
+            { keywords: ["apologize", "sorry", "make up"], response: "A sincere apology includes admitting your mistake, expressing remorse, and making efforts to improve in the future." },
+            { keywords: ["marriage", "wedding", "proposal"], response: "A strong marriage is built on love, respect, and communication. Make sure you're both on the same page about your future!" },
+            { keywords: ["break up", "ending relationship"], response: "Breakups are tough. Take time to process your emotions and surround yourself with support. Healing takes time." },
+            { keywords: ["anniversary", "special day", "celebrate love"], response: "Happy Anniversary! Make it special with heartfelt letters, a surprise date, or recreating your first date." },
+            { keywords: ["bye", "goodbye", "see you"], response: "Goodbye! Wishing you and your partner lots of love and happiness! ❤" }
+        ];
 
         function findBestMatch(input) {
-            const keys = Object.keys(responses);
-            for (let key of keys) {
-                if (input.includes(key)) {
-                    return responses[key];
+            input = input.toLowerCase();
+            for (let entry of responses) {
+                for (let keyword of entry.keywords) {
+                    if (input.includes(keyword)) {
+                        return entry.response;
+                    }
                 }
             }
-            return null;
+            return "I'm not sure how to respond to that. Could you rephrase or ask something else?";
         }
 
         function sendMessage() {
             const chatbox = document.getElementById("chatbox");
             const userInput = document.getElementById("userInput");
-            const userMessage = userInput.value.trim().toLowerCase();
+            const userMessage = userInput.value.trim();
 
             if (userMessage === "") return;
 
-            chatbox.innerHTML += `<div class='text-sm text-right text-blue-600'>You: ${userInput.value}</div>`;
-            const botResponse = findBestMatch(userMessage) || 
-                "I'm not sure how to respond to that. Could you rephrase or ask something else?";
-            chatbox.innerHTML += `<div class='text-sm text-gray-700'>Bot: ${botResponse}</div>`;
+            // Create user message element
+            const userMessageDiv = document.createElement("div");
+            userMessageDiv.className = "text-sm text-right text-blue-600 mb-2";
+            userMessageDiv.textContent = `You: ${userMessage}`;
+            chatbox.appendChild(userMessageDiv);
+
+            // Find bot response
+            const botResponse = findBestMatch(userMessage);
+
+            // Create bot response element
+            const botMessageDiv = document.createElement("div");
+            botMessageDiv.className = "text-sm text-gray-700 mb-2";
+            botMessageDiv.textContent = `Bot: ${botResponse}`;
+            chatbox.appendChild(botMessageDiv);
+
+            // Scroll to the bottom of the chatbox
             chatbox.scrollTop = chatbox.scrollHeight;
+
+            // Clear input field
             userInput.value = "";
         }
 

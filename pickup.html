@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickup Lines - Cupid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        deepPurple: '#6b21a8',
+                        softPink: '#f9a8d4',
+                        calmingBlue: '#60a5fa',
+                    },
+                },
+            },
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <style>
+        .pickup-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #a855f7;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #a855f7, #f9a8d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.8s ease-in-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-romanticPurple via-softPink to-calmingBlue min-h-screen flex flex-col">
+    <header class="bg-white shadow-lg py-4">
+        <div class="container mx-auto text-center">
+            <a href="index.html"><h1 class="text-4xl font-bold text-purple-600">💘 Cupid</h1></a>
+            <p class="text-gray-600">Bringing hearts closer, one pickup line at a time.</p>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center px-4">
+        <div class="bg-white shadow-lg rounded-2xl p-6 sm:p-10 w-full max-w-lg">
+            <h2 class="text-3xl font-semibold text-center text-deepPurple mb-6">Generate Your Perfect Pickup Line</h2>
+            
+            <label class="block text-gray-700 text-sm font-bold mb-2">Describe Your Partner:</label>
+            <textarea id="description" class="w-full border rounded-lg p-3 text-gray-700 focus:ring-romanticPurple focus:border-romanticPurple" placeholder="Kind, funny, beautiful..."></textarea>
+
+            <label class="block text-gray-700 text-sm font-bold mt-4 mb-2">Choose the Style:</label>
+            <select id="style" class="w-full border rounded-lg p-3 text-gray-700 focus:ring-romanticPurple focus:border-romanticPurple">
+                <option value="Romantic">Romantic</option>
+                <option value="Cheesy">Cheesy</option>
+                <option value="Funny">Funny</option>
+                <option value="Smooth">Smooth</option>
+            </select>
+
+            <button id="generate" class="w-full mt-6 bg-romanticPurple hover:bg-deepPurple text-white font-bold py-3 rounded-lg transition duration-300">
+                Generate Pickup Line
+            </button>
+
+            <div id="pickupLine" class="mt-6 p-4 text-center bg-gray-100 rounded-lg shadow-md hidden">
+                <p id="pickupText" class="pickup-text"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-purple-600 py-4 text-center text-white">
+        <p>&copy; 2025 Cupid. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('generate').addEventListener('click', function() {
+            const description = document.getElementById('description').value.trim();
+            const style = document.getElementById('style').value;
+            const pickupLineElement = document.getElementById('pickupLine');
+            const pickupText = document.getElementById('pickupText');
+
+            if (!description) {
+                pickupText.innerHTML = `<span class="text-red-500">Please describe your partner first! 💕</span>`;
+                pickupLineElement.classList.remove("hidden");
+                return;
+            }
+
+            const staticLines = {
+                Romantic: [
+                    "You must be made of copper and tellurium because you’re Cu-Te. 😉",
+                    "Every love story is beautiful, but ours will be my favorite. ❤️",
+                    "If I could rearrange the alphabet, I’d put U and I together. 😍",
+                    "Do you believe in fate? Because I think we were meant to meet. ✨",
+                    "If kisses were snowflakes, I’d send you a blizzard. ❄️💋",
+                    "Are you an angel? Because heaven is missing one. 👼",
+                    "You’re the reason I believe in love at first sight. 💘",
+                    "You make my heart race faster than my morning coffee. ☕💖",
+                    "Even if there was no gravity on Earth, I’d still fall for you. 🌍💞",
+                    "Can you feel the electricity between us, or is that just my heart racing? ⚡❤️"
+                ],
+                Cheesy: [
+                    "Are you a magician? Because whenever I look at you, everyone else disappears! 🎩✨",
+                    "Are you made of sugar? Because you’re too sweet to handle. 🍭💗",
+                    "Are you WiFi? Because I’m feeling a strong connection! 📶💕",
+                    "Are you a time traveler? Because I see my future with you. ⏳❤️",
+                    "Are you a star? Because your beauty lights up my world! 🌟",
+                    "Did we just share electrons? Because I feel a bond between us. 🧪💞",
+                    "Are you a loan? Because you have my interest. 💰💕",
+                    "I must be a snowflake, because I’ve fallen for you. ❄️💙",
+                    "Do you believe in love at first sight, or should I walk by again? 😏",
+                    "Can I take you out for dinner? Because I can’t seem to get you off my mind! 🍽️😍"
+                ],
+                Funny: [
+                    "Are you a bank loan? Because you have my interest. 💸😂",
+                    "I must be a snowman, because I’m melting for you. ☃️❤️",
+                    "Is your name Chapstick? Because you’re da balm! 💋😂",
+                    "If beauty were time, you’d be eternity. ⏳😍",
+                    "Are you an artist? Because you just painted a smile on my face. 🎨😁",
+                    "If I were a cat, I’d spend all 9 lives with you. 🐱❤️",
+                    "Do you have a map? I keep getting lost in your eyes. 😵‍💫😍",
+                    "Are you a boomerang? Because you just keep coming back to my mind! 🔄",
+                    "Are you French? Because Eiffel for you! 🗼😂",
+                    "Are you a light bulb? Because you just brightened my day! 💡✨"
+                ],
+                Smooth: [
+                    "Are you a campfire? Because you’re hot and I want s’more. 🔥🍫",
+                    "Excuse me, but I think you dropped something: my jaw. 😏",
+                    "Your hand looks heavy—can I hold it for you? 🤝❤️",
+                    "Are you Netflix? Because I could binge you all night. 🍿😍",
+                    "If you were words on a page, you’d be fine print. 📖🔥",
+                    "Are you a diamond? Because you shine brighter than anyone. 💎",
+                    "Are you Cinderella? Because I see that glass slipper fitting perfectly. 👠",
+                    "I must be a photographer, because I can picture us together. 📸",
+                    "Are you the ocean? Because I’m lost at sea. 🌊💘",
+                    "I must be lost, because heaven is a long way from here. 👼"
+                ]
+            };
+
+            const randomLine = staticLines[style][Math.floor(Math.random() * staticLines[style].length)];
+            pickupText.innerHTML = randomLine;
+            pickupText.classList.add("pickup-text");
+            pickupLineElement.classList.remove("hidden");
+        });
+    </script>
+</body>
+</html>

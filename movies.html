@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Swipe - Cupid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        softPink: '#f9a8d4',
+                        matchGlow: '#ffeb3b',
+                        deepPink: '#ff4081',
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gradient-to-r from-romanticPurple via-softPink to-pink-300 min-h-screen flex flex-col items-center justify-center">
+
+    <div id="movie-container" class="w-[450px] h-[650px] bg-white shadow-lg rounded-lg p-4 flex flex-col items-center justify-center">
+        <img id="movie-poster" class="w-full h-[70%] object-cover rounded-lg" src="" alt="Movie Poster">
+        <h2 id="movie-title" class="text-xl font-bold mt-3 text-gray-800"></h2>
+        
+        <div class="flex space-x-4 mt-3">
+            <button onclick="swipeLeft()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">❌ Pass</button>
+            <button onclick="swipeRight()" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">✔️ Like</button>
+        </div>
+    </div>
+
+    <!-- Match Celebration Screen -->
+    <div id="match-screen" class="hidden fixed inset-0 bg-gradient-to-r from-romanticPurple via-softPink to-deepPink flex flex-col items-center justify-center text-white text-center transition-all duration-500 p-6">
+        <h1 class="text-6xl font-extrabold mb-4 animate-pulse drop-shadow-lg">💖 IT'S A MATCH! 💖</h1>
+        <img id="matched-poster" class="w-[320px] h-[480px] object-cover rounded-2xl shadow-lg border-4 border-white">
+        <h2 id="matched-movie" class="text-4xl font-semibold mt-6 drop-shadow-md"></h2>
+        <p class="mt-3 text-2xl italic opacity-90">Your perfect movie night awaits! 🍿✨</p>
+        <button onclick="closeMatchScreen()" class="mt-8 px-8 py-4 text-xl font-bold rounded-full bg-white text-deepPink shadow-md hover:bg-gray-200 transition">
+            Close & Enjoy 🎬
+        </button>
+    </div>
+
+    <script>
+        const movies = [
+            { title: "Inception", poster: "https://imgs.search.brave.com/Wyrv9FDT78jH2LWA3lsc8JDHKYtlUgqi0jmRFyfUuo0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kNWQ1/eWVqcmJhOWxvLmNs/b3VkZnJvbnQubmV0/L2tleWFydC1qcGVn/L21vdmllcy9tZWRp/YS9icm93c2VyL2lu/Y2VwdGlvbl92X2Rk/X2thX3R0XzIwMDB4/MzAwMF8zMDBkcGlf/ZW4uanBn" },
+            { title: "The Dark Knight", poster: "https://imgs.search.brave.com/F5t-2VqPXM6Wh7HIq5FOrbI1AVWd9n7NZaD4DlYXzGo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2ZkLzg2/LzhlL2ZkODY4ZWE1/ZjA5NjdmMjMxZDg2/YWQ0ZDIwMWFhNDcw/LmpwZw" },
+            { title: "La La Land", poster: "https://imgs.search.brave.com/eaTCzdgJwyz35hRjAG_vbZDg27DJxTOZ2Kzop9SNAV0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Y2luZW1hdGVyaWFs/LmNvbS9wLzI5N3gv/dW5va3RndHYvbGEt/bGEtbGFuZC1tb3Zp/ZS1wb3N0ZXItbWQu/anBnP3Y9MTQ3MjU4/OTcxNw" },
+            { title: "The Truman Show", poster: "https://imgs.search.brave.com/HqWm6uHvnhpta7A5N1bMYMd8RQQJEvsNI61wT_xWzlA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wb3N0/ZXJob3VzZS5vcmcv/d3AtY29udGVudC91/cGxvYWRzLzIwMjMv/MDcvREJfMDI5LTY5/MXgxMDI0LmpwZw" },
+            { title: "Animal", poster: "https://bollywoodmovieposters.com/wp-content/uploads/2024/02/animal-movie-poster-ranbir-kapoor.jpg" },
+            { title: "Jurassic Park", poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE03lw6PBqdGQB0MJT53mO8ehAIxiy2r_pAg&s" },
+        ];
+
+        let currentMovieIndex = 0;
+        let userSelection = null;
+
+        function updateMovie() {
+            const movie = movies[currentMovieIndex];
+            document.getElementById("movie-title").innerText = movie.title;
+            document.getElementById("movie-poster").src = movie.poster;
+        }
+
+        function swipeLeft() {
+            nextMovie();
+        }
+
+        function swipeRight() {
+            userSelection = movies[currentMovieIndex];
+            checkMatch();
+            nextMovie();
+        }
+
+        function nextMovie() {
+            currentMovieIndex = (currentMovieIndex + 1) % movies.length;
+            updateMovie();
+        }
+
+        function checkMatch() {
+            if (userSelection.title === "La La Land") {
+                showMatchScreen(userSelection);
+            }
+        }
+
+        function showMatchScreen(movie) {
+            document.getElementById("match-screen").classList.remove("hidden");
+            document.getElementById("matched-movie").innerText = "You both chose " + movie.title + "!";
+            document.getElementById("matched-poster").src = movie.poster;
+        }
+
+        function closeMatchScreen() {
+            document.getElementById("match-screen").classList.add("hidden");
+        }
+
+        updateMovie();
+    </script>
+
+</body>
+</html>

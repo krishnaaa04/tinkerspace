@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Couple Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              romanticPurple: '#a855f7',
+              deepPurple: '#6b21a8',
+              softPink: '#f9a8d4',
+            },
+          },
+        },
+      };
+    </script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-romanticPurple via-softPink to-deepPurple">
+    <div class="bg-white shadow-xl rounded-2xl p-8 sm:p-12 w-full max-w-lg">
+        <h2 class="text-3xl font-bold text-center text-deepPurple mb-2">Create Your Account</h2>
+        <p class="text-gray-600 text-center mb-8">Join 💘 Cupid today!</p>
+        <form action="#" method="POST" class="space-y-6">
+            <!-- Full Name -->
+            <div>
+                <label for="full-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <input type="text" id="full-name" name="full-name" required 
+                    class="mt-2 w-full p-3 border border-gray-300 rounded-xl focus:ring-romanticPurple focus:border-romanticPurple transition duration-200">
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" id="email" name="email" required 
+                    class="mt-2 w-full p-3 border border-gray-300 rounded-xl focus:ring-romanticPurple focus:border-romanticPurple transition duration-200">
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" required 
+                    class="mt-2 w-full p-3 border border-gray-300 rounded-xl focus:ring-romanticPurple focus:border-romanticPurple transition duration-200">
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+                <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required 
+                    class="mt-2 w-full p-3 border border-gray-300 rounded-xl focus:ring-romanticPurple focus:border-romanticPurple transition duration-200">
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="flex items-start">
+                <input id="terms" name="terms" type="checkbox" required
+                    class="h-4 w-4 text-romanticPurple border-gray-300 rounded focus:ring-romanticPurple">
+                <label for="terms" class="ml-2 text-sm text-gray-600">
+                    I agree to the <a href="#" class="text-romanticPurple hover:underline">Terms and Conditions</a>.
+                </label>
+            </div>
+
+            <!-- Register Button -->
+            <div>
+                <button type="submit" 
+                    class="w-full bg-deepPurple text-white font-bold py-3 rounded-xl hover:bg-romanticPurple focus:ring-4 focus:ring-softPink transition duration-300">
+                    Register
+                </button>
+            </div>
+        </form>
+
+        <!-- Login Redirect -->
+        <p class="text-sm text-gray-500 mt-6 text-center">
+            Already have an account? 
+            <a href="login.html" class="text-romanticPurple font-medium hover:underline hover:text-deepPurple transition duration-200">
+                Log in
+            </a>
+        </p>
+    </div>
+</body>
+</html>

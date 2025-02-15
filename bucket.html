@@ -18,15 +18,29 @@
             },
         };
 
-        // Form validation
         function validateForm(event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
             const checkedItems = document.querySelectorAll('input[type="checkbox"]:checked');
             if (checkedItems.length === 0) {
                 alert('Please select at least one item from the list.');
             } else {
                 alert('Your bucket list has been saved!');
-                // Here you can process the form data, e.g., send it to the server or store locally
+            }
+        }
+
+        function addBucketItem() {
+            const input = document.getElementById("new-bucket-item");
+            const list = document.getElementById("bucket-list-items");
+            const itemText = input.value.trim();
+            if (itemText) {
+                const listItem = document.createElement("div");
+                listItem.className = "flex items-center";
+                listItem.innerHTML = `
+                    <input type="checkbox" class="mr-2">
+                    <label class="font-semibold text-purple-700">${itemText}</label>
+                `;
+                list.appendChild(listItem);
+                input.value = "";
             }
         }
     </script>
@@ -37,62 +51,59 @@
         <p class="text-gray-600 text-center mt-2">Here are some exciting goals and experiences to look forward to!</p>
 
         <form id="bucket-list-form" class="mt-6 space-y-6" onsubmit="validateForm(event)">
-            <!-- Bucket List Items -->
-            <div class="space-y-4">
-                <!-- Item 1 -->
+            <div id="bucket-list-items" class="space-y-4">
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket1" id="bucket1" class="mr-2" checked>
-                    <label for="bucket1" class="font-semibold text-purple-700">Visit the Eiffel Tower in Paris</label>
+                    <input type="checkbox" class="mr-2" checked>
+                    <label class="font-semibold text-purple-700">Visit the Eiffel Tower in Paris</label>
                 </div>
-                <!-- Item 2 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket2" id="bucket2" class="mr-2">
-                    <label for="bucket2" class="font-semibold text-purple-700">Go on a road trip across the United States</label>
+                    <input type="checkbox" class="mr-2">
+                    <label class="font-semibold text-purple-700">Go on a road trip across the United States</label>
                 </div>
-                <!-- Item 3 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket3" id="bucket3" class="mr-2">
-                    <label for="bucket3" class="font-semibold text-purple-700">Learn how to surf in Hawaii</label>
+                    <input type="checkbox" class="mr-2">
+                    <label class="font-semibold text-purple-700">Learn how to surf in Hawaii</label>
                 </div>
-                <!-- Item 4 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket4" id="bucket4" class="mr-2" checked>
-                    <label for="bucket4" class="font-semibold text-purple-700">Attend a major music festival (e.g., Coachella)</label>
+                    <input type="checkbox" class="mr-2" checked>
+                    <label class="font-semibold text-purple-700">Attend a major music festival (e.g., Coachella)</label>
                 </div>
-                <!-- Item 5 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket5" id="bucket5" class="mr-2">
-                    <label for="bucket5" class="font-semibold text-purple-700">Go on a hot air balloon ride</label>
+                    <input type="checkbox" class="mr-2">
+                    <label class="font-semibold text-purple-700">Go on a hot air balloon ride</label>
                 </div>
-                <!-- Item 6 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket6" id="bucket6" class="mr-2" checked>
-                    <label for="bucket6" class="font-semibold text-purple-700">Take a cooking class in Italy</label>
+                    <input type="checkbox" class="mr-2" checked>
+                    <label class="font-semibold text-purple-700">Take a cooking class in Italy</label>
                 </div>
-                <!-- Item 7 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket7" id="bucket7" class="mr-2">
-                    <label for="bucket7" class="font-semibold text-purple-700">Visit all seven continents</label>
+                    <input type="checkbox" class="mr-2">
+                    <label class="font-semibold text-purple-700">Visit all seven continents</label>
                 </div>
-                <!-- Item 8 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket8" id="bucket8" class="mr-2">
-                    <label for="bucket8" class="font-semibold text-purple-700">Run a marathon in New York City</label>
+                    <input type="checkbox" class="mr-2">
+                    <label class="font-semibold text-purple-700">Run a marathon in New York City</label>
                 </div>
-                <!-- Item 9 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket9" id="bucket9" class="mr-2">
-                    <label for="bucket9" class="font-semibold text-purple-700">Go scuba diving in the Great Barrier Reef</label>
+                    <input type="checkbox" class="mr-2">
+                    <label class="font-semibold text-purple-700">Go scuba diving in the Great Barrier Reef</label>
                 </div>
-                <!-- Item 10 -->
                 <div class="flex items-center">
-                    <input type="checkbox" name="bucket10" id="bucket10" class="mr-2">
-                    <label for="bucket10" class="font-semibold text-purple-700">Live in a different country for a year</label>
+                    <input type="checkbox" class="mr-2">
+                    <label class="font-semibold text-purple-700">Live in a different country for a year</label>
                 </div>
             </div>
 
-            <!-- Submit Button -->
-            <button type="submit" class="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition">Save Your List</button>
+            <div class="mt-4">
+                <input id="new-bucket-item" type="text" placeholder="Add a new goal..." class="w-full p-2 border border-gray-300 rounded-lg">
+                <button type="button" onclick="addBucketItem()" class="mt-2 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition">
+                    Add to Bucket List
+                </button>
+            </div>
+
+            <button type="submit" class="mt-4 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition">
+                Save Your List
+            </button>
         </form>
     </div>
 </body>

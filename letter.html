@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Letters - Cupid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        deepPurple: '#6b21a8',
+                        softPink: '#f9a8d4',
+                        calmingBlue: '#60a5fa',
+                    },
+                    fontFamily: {
+                        handwritten: ['"Dancing Script"', 'cursive'],
+                    },
+                },
+            },
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* Matching Background */
+        body {
+            background: linear-gradient(to right, #a855f7, #f9a8d4, #60a5fa);
+        }
+
+        /* Paper Styles */
+        .paper {
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 200px;
+            font-family: 'Pacifico', cursive;
+            color: #5a3e2b;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .parchment {
+            background-image: url('https://imgs.search.brave.com/0WK3xR7lKD9yl9iQ3lL0yPHB17OGoOsh4_xAo34ohMA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAzLzY2LzEwLzE0/LzM2MF9GXzM2NjEw/MTQyN184eWF6VUpL/ODJmRHJMaTRZdHBu/UU8zREo0ZFR5Z3hv/ZS5qcGc');
+        }
+        .soft-pink {
+            background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/paper_fibers.png');
+        }
+        .deep-purple {
+            background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/debut_light.png');
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4">
+
+    <div class="bg-white shadow-2xl rounded-2xl p-6 sm:p-10 w-full max-w-3xl">
+        <h1 class="text-3xl font-bold text-center text-deepPurple mb-4">💌 Share a Love Letter</h1>
+        <p class="text-gray-600 text-center mb-6">Write your heartfelt message and send it to your loved one!</p>
+
+        <!-- Paper Style Selection -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Choose Paper Style:</label>
+            <select id="paperStyle" class="border p-2 rounded w-full">
+                <option value="parchment">Classic Parchment</option>
+                <option value="soft-pink">Romantic Soft Pink</option>
+                <option value="deep-purple">Elegant Deep Purple</option>
+            </select>
+        </div>
+
+        <!-- Letter Text Area -->
+        <div id="letterWrapper" class="p-4 border rounded-xl paper parchment">
+            <textarea id="letterContent" class="w-full bg-transparent border-none focus:outline-none text-lg min-h-[150px] resize-none" 
+                placeholder="Write your love letter here..."></textarea>
+        </div>
+
+        <!-- Sticker Selection -->
+        <div class="mt-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Add a Sticker:</label>
+            <div class="flex space-x-4">
+                <button class="sticker bg-red-500 text-white p-2 rounded text-2xl">❤️</button>
+                <button class="sticker bg-yellow-400 text-white p-2 rounded text-2xl">🌟</button>
+                <button class="sticker bg-pink-400 text-white p-2 rounded text-2xl">💖</button>
+                <button class="sticker bg-purple-500 text-white p-2 rounded text-2xl">💜</button>
+            </div>
+        </div>
+
+        <!-- Send Button -->
+        <div class="text-center mt-6">
+            <button id="sendLetter" class="bg-deepPurple hover:bg-romanticPurple text-white font-bold py-2 px-6 rounded-lg transition duration-300 focus:ring-4 focus:ring-softPink">Send Letter</button>
+        </div>
+
+        <!-- Display Sent Letters -->
+        <div id="sentLetters" class="mt-8 space-y-4">
+            <!-- Sent letters will appear here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('sendLetter').addEventListener('click', function() {
+            const content = document.getElementById('letterContent').value;
+            const paperStyle = document.getElementById('paperStyle').value;
+            if (!content.trim()) {
+                alert("Write something before sending! ❤️");
+                return;
+            }
+
+            // Create letter display
+            const sentLetters = document.getElementById('sentLetters');
+            const letterDiv = document.createElement('div');
+            letterDiv.className = `p-4 border rounded-lg shadow-md paper ${paperStyle}`;
+            letterDiv.innerHTML = `<p>${content}</p>`;
+            sentLetters.prepend(letterDiv); // Show newest letter on top
+
+            // Clear input after sending
+            document.getElementById('letterContent').value = "";
+        });
+
+        // Handle Sticker Click
+        document.querySelectorAll('.sticker').forEach(sticker => {
+            sticker.addEventListener('click', function() {
+                document.getElementById('letterContent').value += ` ${this.textContent}`;
+            });
+        });
+
+        // Change paper texture dynamically
+        document.getElementById('paperStyle').addEventListener('change', function() {
+            const letterWrapper = document.getElementById('letterWrapper');
+            letterWrapper.className = `p-4 border rounded-xl paper ${this.value}`;
+        });
+    </script>
+
+</body>
+</html>

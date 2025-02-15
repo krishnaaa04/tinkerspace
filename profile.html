@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Cupid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romanticPurple: '#a855f7',
+                        deepPurple: '#6b21a8',
+                        softPink: '#f9a8d4',
+                        calmingBlue: '#60a5fa',
+                        gentleRed: '#f87171',  // Slightly toned down red for logout
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gradient-to-r from-romanticPurple via-softPink to-calmingBlue min-h-screen">
+    <header class="bg-white shadow-lg py-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold text-purple-600">💘 Cupid - Your Profile</h1>
+            <p class="text-gray-600">Manage your profile and connect with your loved one.</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto mt-8 px-4">
+        <!-- Profile Information -->
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+            <h2 class="text-2xl font-bold text-purple-800">👤 Your Profile</h2>
+            <div class="mt-4">
+                <p class="text-lg text-gray-600"><strong>Name:</strong> John Doe</p>
+                <p class="text-lg text-gray-600"><strong>Partner:</strong> Jane Smith</p>
+                <p class="text-lg text-gray-600"><strong>Anniversary:</strong> 12th October</p>
+            </div>
+        </div>
+
+        <!-- Couple Connection and Code Generation -->
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto mt-8">
+            <h2 class="text-2xl font-bold text-purple-800">💑 Connect with Your Partner</h2>
+            <p class="text-gray-600 mt-2">Generate a unique code to connect with your loved one or enter the code you received.</p>
+
+            <div class="mt-4 flex flex-col space-y-4">
+                <!-- Generate Code Button -->
+                <div>
+                    <button id="generateCodeButton" class="bg-deepPurple text-white py-2 px-6 rounded-lg hover:bg-purple-700 transition duration-200 w-full">Generate Unique Code</button>
+                    <p id="generatedCode" class="text-lg text-gray-600 mt-4 hidden">Your unique code: <span class="font-semibold text-purple-800" id="codeText">123456</span></p>
+                </div>
+
+                <!-- Enter Code Section -->
+                <div class="flex items-center space-x-4">
+                    <input type="text" id="coupleCode" placeholder="Enter code" class="p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                    <button id="connectButton" class="bg-deepPurple text-white py-2 px-6 rounded-lg hover:bg-purple-700 transition duration-200">Connect</button>
+                </div>
+                <p id="statusMessage" class="text-gray-600 mt-4"></p>
+            </div>
+        </div>
+
+        <!-- Log Out Button -->
+        <div class="mt-8 text-center">
+            <button id="logoutButton" class="bg-gentleRed text-white button hover:bg-red-600 w-full">Log Out</button>
+        </div>
+    </div>
+
+    <footer class="mt-8 bg-purple-600 py-4 text-center text-white">
+        <p>&copy; 2025 Cupid. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Handle unique code generation
+        document.getElementById('generateCodeButton').addEventListener('click', function() {
+            // Simulate generating a random unique code
+            const randomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById('generatedCode').classList.remove('hidden');
+            document.getElementById('codeText').innerText = randomCode;
+        });
+
+        // Handle couple connection using unique code
+        document.getElementById('connectButton').addEventListener('click', function() {
+            const code = document.getElementById('coupleCode').value.trim();
+            const statusMessage = document.getElementById('statusMessage');
+
+            if (code === "") {
+                statusMessage.textContent = "Please enter a code.";
+                statusMessage.classList.remove("text-green-600", "text-red-600");
+                statusMessage.classList.add("text-red-600");
+            } else if (code === "123456") { // Example valid code
+                statusMessage.textContent = "Connected successfully with your partner!";
+                statusMessage.classList.remove("text-red-600");
+                statusMessage.classList.add("text-green-600");
+            } else {
+                statusMessage.textContent = "Invalid code. Please try again.";
+                statusMessage.classList.remove("text-green-600");
+                statusMessage.classList.add("text-red-600");
+            }
+        });
+
+        // Handle log out action
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            // Example log-out action (this could be a redirect or clearing local storage)
+            alert("Logged out successfully!");
+            window.location.href = "index.html"; // Redirect to the homepage (or login page)
+        });
+    </script>
+</body>
+</html>
